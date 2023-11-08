@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { StateService } from '../shared/state.service';
+import { Component } from '@angular/core'
+import { StateService } from '../shared/state.service'
 
 @Component({
     selector: 'app-home',
