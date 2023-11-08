@@ -12,7 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     imports: [
         BrowserModule,
         RouterModule.forRoot([
-            { path: '', pathMatch: 'full', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) }
+            { path: '', pathMatch: 'full', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+            { path: 'location/:institutionId', loadChildren: () => import('./location/location.module').then(m => m.LocationModule) }
+
         ]),
         BrowserAnimationsModule
     ],
