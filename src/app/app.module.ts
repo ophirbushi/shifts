@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { AppComponent } from './app.component'
 import { RouterModule } from '@angular/router'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
             { path: 'location/:institutionId', loadChildren: () => import('./location/location.module').then(m => m.LocationModule) }
 
         ]),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatToolbarModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import { StateService } from '../shared/state.service'
 })
 export class HomeComponent {
     institutions$ = this.state.institutions
+    volunteers$ = this.state.volunteers
 
     constructor(private state: StateService) { }
 }
