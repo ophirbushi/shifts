@@ -23,6 +23,7 @@ export class ExcelService {
             .filter(name => name != null)
         const volunteers: Volunteer[] = volunteerNames.map((name, index) => ({ name, volunteerId: index.toString() }))
         this.state.volunteers.next(volunteers)
+        this.state.persistVolunteers(volunteers)
     }
 
     async importInstitutions(inputElement: HTMLInputElement) {

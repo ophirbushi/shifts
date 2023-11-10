@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { FormsModule } from '@angular/forms'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 
 
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms'
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
-        FormsModule
+        FormsModule,
+        MatSnackBarModule
     ]
 })
 export class ImportDialogModule { }
