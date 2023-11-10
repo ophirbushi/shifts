@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>ייבוא מידע</h2>
+<div mat-dialog-content>
+    <form>
+        <div>
+            <button mat-button type="button" (click)="volunteersFileInput.click()">ייבוא מתנדבים</button>
+            <input hidden (change)="onFileSelected('volunteers', volunteersFileInput)" #volunteersFileInput type="file"
+                id="file">
+        </div>
+        <div>
+            <button mat-button type="button" (click)="institutionsFileInput.click()">ייבוא מוסדות</button>
+            <input hidden (change)="onFileSelected('institutions', institutionsFileInput)" #institutionsFileInput
+                type="file" id="file">
+        </div>
+        <!-- <div>
+            <mat-form-field>
+                <mat-label>ייבוא מוסדות</mat-label>
+                <input type="file" matInput [(ngModel)]="institutionsFile" name="institutionsFile">
+            </mat-form-field>
+            <button mat-button type="button">יבא</button>
+        </div> -->
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>סגור</button>
+</div>

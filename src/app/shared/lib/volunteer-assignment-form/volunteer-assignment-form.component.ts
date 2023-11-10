@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms'
 import { Institution, Shift, StateService, Volunteer } from '../../state.service'
-import { Observable, Subject, map, startWith, takeUntil } from 'rxjs'
+import { Observable, Subject, map, merge, startWith, takeUntil } from 'rxjs'
 
 @Component({
     selector: 'app-volunteer-assignment-form',
@@ -22,7 +22,10 @@ export class VolunteerAssignmentFormComponent implements OnInit, OnDestroy {
     constructor(private state: StateService) { }
 
     ngOnInit() {
-        this.volunteerOptions = this.form.controls.volunteer.valueChanges.pipe(
+        this.volunteerOptions = merge(
+            this.form.controls.volunteer.valueChanges,
+            this.state.volunteers.pipe(map(() => ''))
+        ).pipe(
             startWith(''),
             map((query) => {
                 return this.state.volunteers.value
