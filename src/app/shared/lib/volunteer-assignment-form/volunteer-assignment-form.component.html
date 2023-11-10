@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+    <div>
+        <mat-form-field>
+            <mat-label>מתנדב</mat-label>
+            <input type="text" matInput formControlName="volunteer" [matAutocomplete]="volunteerAuto">
+            <mat-autocomplete #volunteerAuto="matAutocomplete" [displayWith]="volunteerDisplayFn">
+                <mat-option *ngFor="let option of volunteerOptions | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>מוסד</mat-label>
+            <input type="text" matInput formControlName="institution" [matAutocomplete]="institutionAuto">
+            <mat-autocomplete #institutionAuto="matAutocomplete" [displayWith]="institutionDisplayFn">
+                <mat-option *ngFor="let option of institutionOptions | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-label>משמרת</mat-label>
+            <mat-select formControlName="shift">
+                <mat-option *ngFor="let shift of shiftOptions | async" [value]="shift">
+                    {{shift}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+</form>
