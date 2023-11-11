@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div>
         <mat-form-field>
             <mat-label>מתנדב</mat-label>
@@ -31,5 +31,5 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" [disabled]="form.invalid">הוסף</button>
+    <button mat-raised-button color="primary" [disabled]="form.invalid" type="button" (click)="onSubmit()">הוסף</button>
 </form>

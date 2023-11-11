@@ -19,6 +19,12 @@ export interface Shift {
     timeframe: string
 }
 
+export interface Assignment {
+    assignmentId: string
+    shiftId: string
+    volunteerId: string
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -31,6 +37,9 @@ export class StateService {
     )
     shifts = new BehaviorSubject<Shift[]>(
         localStorage.getItem('shifts') ? JSON.parse(localStorage.getItem('shifts') as string) : []
+    )
+    assignments = new BehaviorSubject<Assignment[]>(
+        localStorage.getItem('assignments') ? JSON.parse(localStorage.getItem('assignments') as string) : []
     )
 
     getInstitutionById(institutionId: string) {
@@ -47,5 +56,9 @@ export class StateService {
 
     persistShifts(shifts: Shift[]) {
         localStorage.setItem('shifts', JSON.stringify(shifts))
+    }
+
+    persistAssignments(assignments: Assignment[]) {
+        localStorage.setItem('assignments', JSON.stringify(assignments))
     }
 }

@@ -1,6 +1,5 @@
 <section>
     <h2>שיבוץ משמרת</h2>
-
     <app-volunteer-assignment-form></app-volunteer-assignment-form>
 </section>
 
@@ -8,8 +7,8 @@
 <section>
     <h2>מוסדות</h2>
     <div class="row">
-        <div class="col-6" *ngFor="let institution of (institutions$ | async)">
-            <mat-card [routerLink]="['/location', institution.institutionId]">
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let institution of (institutions$ | async)">
+            <mat-card [routerLink]="['/location', institution.institutionId]" style="margin-bottom: 16px; min-height: 80px;" role="button">
                 <mat-card-content>{{institution.name}}</mat-card-content>
             </mat-card>
         </div>

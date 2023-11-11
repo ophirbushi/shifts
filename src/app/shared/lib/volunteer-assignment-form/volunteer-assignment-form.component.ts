@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms'
-import { Institution, Shift, StateService, Volunteer } from '../../state.service'
+import { Assignment, Institution, Shift, StateService, Volunteer } from '../../state.service'
 import { Observable, Subject, map, merge, startWith, takeUntil } from 'rxjs'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
     selector: 'app-volunteer-assignment-form',
@@ -19,7 +20,7 @@ export class VolunteerAssignmentFormComponent implements OnInit, OnDestroy {
     shiftOptions!: Observable<Shift[]>
     private readonly destroy = new Subject()
 
-    constructor(private state: StateService) { }
+    constructor(private state: StateService, private snackbar: MatSnackBar) { }
 
     ngOnInit() {
         this.volunteerOptions = merge(
@@ -48,7 +49,6 @@ export class VolunteerAssignmentFormComponent implements OnInit, OnDestroy {
                     .filter(shift => institution.institutionId === shift.institutionId)
             })
         )
-
         this.form.controls.institution.valueChanges
             .pipe(takeUntil(this.destroy))
             .subscribe((insitution) => {
@@ -72,6 +72,19 @@ export class VolunteerAssignmentFormComponent implements OnInit, OnDestroy {
 
     institutionDisplayFn(institution: Institution | null): string {
         return institution?.name || ''
+    }
+
+    onSubmit() {
+        const { volunteer, shift } = this.form.value
+        const newAssignment: Assignment = {
+            assignmentId: Math.random().toString(),
+            shiftId: shift!.shiftId,
+            volunteerId: (volunteer as Volunteer)!.volunteerId
+        }
+        this.state.assignments.next([...this.state.assignments.value, newAssignment])
+        this.state.persistAssignments(this.state.assignments.value)
+        this.form.reset()
+        this.snackbar.open('המשמרת נוספה בהצלחה.', 'אישור', { duration: 4 * 1000 })
     }
 
     private objectValidator(ctrl: AbstractControl) {

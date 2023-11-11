@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, ElementRef } from '@angular/core'
+import { Component } from '@angular/core'
 import { MatDialogRef } from '@angular/material/dialog'
 import { ExcelService } from '../../excel.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -21,7 +21,7 @@ export class ImportDialogComponent {
         if (type === 'volunteers') {
             try {
                 await this.excel.importVolunteers(inputFile)
-                this.snackbar.open('הקןבץ נקלט בהצלחה.', 'אישור')
+                this.snackbar.open('הקןבץ נקלט בהצלחה.', 'אישור', { duration: 4 * 1000 })
             } catch (err) {
                 this.snackbar.open('קרתה תקלה.', 'אישור')
             }
@@ -29,7 +29,7 @@ export class ImportDialogComponent {
         if (type === 'institutions') {
             try {
                 await this.excel.importInstitutions(inputFile)
-                this.snackbar.open('הקןבץ נקלט בהצלחה.', 'אישור')
+                this.snackbar.open('הקןבץ נקלט בהצלחה.', 'אישור', { duration: 4 * 1000 })
             } catch (err) {
                 this.snackbar.open('קרתה תקלה.', 'אישור')
             }
