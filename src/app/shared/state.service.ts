@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs'
 export interface Volunteer {
     volunteerId: string
     name: string
+    phone: string
 }
 
 export interface Institution {
@@ -25,10 +26,9 @@ export class StateService {
     volunteers = new BehaviorSubject<Volunteer[]>(
         localStorage.getItem('volunteers') ? JSON.parse(localStorage.getItem('volunteers') as string) : []
     )
-    institutions = new BehaviorSubject<Institution[]>([
-        { institutionId: '1', name: 'המקהלה הקאמרית הישראלית' },
-        { institutionId: '2', name: 'גינת הנוי בית שאן' }
-    ])
+    institutions = new BehaviorSubject<Institution[]>(
+        localStorage.getItem('institutions') ? JSON.parse(localStorage.getItem('institutions') as string) : []
+    )
     shifts = new BehaviorSubject<Shift[]>([
         { shiftId: '1', date: '11-8-2023', institutionId: '1', timeframe: '08:00 - 10:00' },
         { shiftId: '2', date: '11-8-2023', institutionId: '1', timeframe: '10:00 - 12:00' },
