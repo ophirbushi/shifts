@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import * as XLSX from 'xlsx'
-import { Institution, StateService, Volunteer } from './state.service'
+import { Institution, Shift, StateService, Volunteer } from './state.service'
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +23,21 @@ export class ExcelService {
         const wb = XLSX.read(file)
         const sheet = wb.Sheets['Sheet1']
         const institutions = this.readSheet<Institution>(sheet, ['name'], 'institutionId')
+
+        const shifts: Shift[] = []
+
+        const date = new Date()
+        institutions.forEach(institution => {
+            shifts.push({ institutionId: institution.institutionId, shiftId: Math.random().toString(), date: date.toDateString(), timeframe: '08:00 - 10:00' })
+            shifts.push({ institutionId: institution.institutionId, shiftId: Math.random().toString(), date: date.toDateString(), timeframe: '10:00 - 12:00' })
+            shifts.push({ institutionId: institution.institutionId, shiftId: Math.random().toString(), date: date.toDateString(), timeframe: '12:00 - 14:00' })
+            shifts.push({ institutionId: institution.institutionId, shiftId: Math.random().toString(), date: date.toDateString(), timeframe: '14:00 - 16:00' })
+            shifts.push({ institutionId: institution.institutionId, shiftId: Math.random().toString(), date: date.toDateString(), timeframe: '16:00 - 18:00' })
+        })
+
+        this.state.shifts.next(shifts)
+        this.state.persistShifts(shifts)
+
         this.state.institutions.next(institutions)
         this.state.persistInstitutions(institutions)
     }

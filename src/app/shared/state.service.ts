@@ -29,18 +29,9 @@ export class StateService {
     institutions = new BehaviorSubject<Institution[]>(
         localStorage.getItem('institutions') ? JSON.parse(localStorage.getItem('institutions') as string) : []
     )
-    shifts = new BehaviorSubject<Shift[]>([
-        { shiftId: '1', date: '11-8-2023', institutionId: '1', timeframe: '08:00 - 10:00' },
-        { shiftId: '2', date: '11-8-2023', institutionId: '1', timeframe: '10:00 - 12:00' },
-        { shiftId: '3', date: '11-8-2023', institutionId: '1', timeframe: '12:00 - 14:00' },
-        { shiftId: '4', date: '11-8-2023', institutionId: '1', timeframe: '14:00 - 16:00' },
-        { shiftId: '5', date: '11-8-2023', institutionId: '1', timeframe: '16:00 - 18:00' },
-        { shiftId: '6', date: '11-8-2023', institutionId: '2', timeframe: '08:00 - 10:00' },
-        { shiftId: '7', date: '11-8-2023', institutionId: '2', timeframe: '10:00 - 12:00' },
-        { shiftId: '8', date: '11-8-2023', institutionId: '2', timeframe: '12:00 - 14:00' },
-        { shiftId: '9', date: '11-8-2023', institutionId: '2', timeframe: '14:00 - 16:00' },
-        { shiftId: '10', date: '11-8-2023', institutionId: '2', timeframe: '16:00 - 18:00' },
-    ])
+    shifts = new BehaviorSubject<Shift[]>(
+        localStorage.getItem('shifts') ? JSON.parse(localStorage.getItem('shifts') as string) : []
+    )
 
     getInstitutionById(institutionId: string) {
         return this.institutions.value.find(institution => institution.institutionId === institutionId)
@@ -52,5 +43,9 @@ export class StateService {
 
     persistInstitutions(institutions: Institution[]) {
         localStorage.setItem('institutions', JSON.stringify(institutions))
+    }
+
+    persistShifts(shifts: Shift[]) {
+        localStorage.setItem('shifts', JSON.stringify(shifts))
     }
 }
