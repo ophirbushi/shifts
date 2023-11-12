@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { AppComponent } from './app.component'
 import { RouterModule } from '@angular/router'
@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { ImportDialogModule } from './shared/lib/import-dialog/import-dialog.module'
 import { FirebaseOptions, initializeApp, provideFirebaseApp } from '@angular/fire/app'
 import { getDatabase, provideDatabase } from '@angular/fire/database'
+import { appInit } from './app.init'
+import { StateService } from './shared/state.service'
 
 @NgModule({
     declarations: [
@@ -40,7 +42,9 @@ import { getDatabase, provideDatabase } from '@angular/fire/database'
         } as FirebaseOptions)),
         provideDatabase(() => getDatabase())
     ],
-    providers: [],
+    providers: [
+        { provide: APP_INITIALIZER, multi: true, useFactory: appInit, deps: [StateService] }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

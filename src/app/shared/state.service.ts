@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
+import { DatabaseService } from './database.service'
 
 export interface Volunteer {
     volunteerId: string
@@ -29,36 +30,43 @@ export interface Assignment {
     providedIn: 'root'
 })
 export class StateService {
-    volunteers = new BehaviorSubject<Volunteer[]>(
-        localStorage.getItem('volunteers') ? JSON.parse(localStorage.getItem('volunteers') as string) : []
-    )
-    institutions = new BehaviorSubject<Institution[]>(
-        localStorage.getItem('institutions') ? JSON.parse(localStorage.getItem('institutions') as string) : []
-    )
-    shifts = new BehaviorSubject<Shift[]>(
-        localStorage.getItem('shifts') ? JSON.parse(localStorage.getItem('shifts') as string) : []
-    )
-    assignments = new BehaviorSubject<Assignment[]>(
-        localStorage.getItem('assignments') ? JSON.parse(localStorage.getItem('assignments') as string) : []
-    )
+    volunteers!: BehaviorSubject<Volunteer[]>
+    institutions!: BehaviorSubject<Institution[]>
+    shifts!: BehaviorSubject<Shift[]>
+    assignments!: BehaviorSubject<Assignment[]>
+
+    constructor(private database: DatabaseService) { }
+
+    async init() {
+        const [volunteers, institutions, shifts, assignments] = await Promise.all([
+            this.database.get<Volunteer[]>('volunteers'),
+            this.database.get<Institution[]>('institutions'),
+            this.database.get<Shift[]>('shifts'),
+            this.database.get<Assignment[]>('assignments')
+        ])
+        this.volunteers = new BehaviorSubject(volunteers || [])
+        this.institutions = new BehaviorSubject(institutions || [])
+        this.shifts = new BehaviorSubject(shifts || [])
+        this.assignments = new BehaviorSubject(assignments || [])
+    }
 
     getInstitutionById(institutionId: string) {
         return this.institutions.value.find(institution => institution.institutionId == institutionId)
     }
 
     persistVolunteers(volunteers: Volunteer[]) {
-        localStorage.setItem('volunteers', JSON.stringify(volunteers))
+        return this.database.set('volunteers', volunteers)
     }
 
     persistInstitutions(institutions: Institution[]) {
-        localStorage.setItem('institutions', JSON.stringify(institutions))
+        return this.database.set('institutions', institutions)
     }
 
     persistShifts(shifts: Shift[]) {
-        localStorage.setItem('shifts', JSON.stringify(shifts))
+        return this.database.set('shifts', shifts)
     }
 
     persistAssignments(assignments: Assignment[]) {
-        localStorage.setItem('assignments', JSON.stringify(assignments))
+        return this.database.set('assignments', assignments)
     }
 }
