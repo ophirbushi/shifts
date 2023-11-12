@@ -11,3 +11,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 mat-form-field {
     min-width: 280px !important;
 }
+
+.cdk-visually-hidden {
+    margin: 0 !important;
+}
