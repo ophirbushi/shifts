@@ -43,7 +43,7 @@ export class StateService {
     )
 
     getInstitutionById(institutionId: string) {
-        return this.institutions.value.find(institution => institution.institutionId === institutionId)
+        return this.institutions.value.find(institution => institution.institutionId == institutionId)
     }
 
     persistVolunteers(volunteers: Volunteer[]) {

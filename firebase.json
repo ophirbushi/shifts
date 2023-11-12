@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "dist/shifts-ui",
+    "site": "florentine-volunteering",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
