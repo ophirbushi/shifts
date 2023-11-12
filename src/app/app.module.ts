@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-
 import { AppComponent } from './app.component'
 import { RouterModule } from '@angular/router'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -9,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatDialogModule } from '@angular/material/dialog'
 import { ImportDialogModule } from './shared/lib/import-dialog/import-dialog.module'
+import { FirebaseOptions, initializeApp, provideFirebaseApp } from '@angular/fire/app'
+import { getDatabase, provideDatabase } from '@angular/fire/database'
 
 @NgModule({
     declarations: [
@@ -26,7 +27,18 @@ import { ImportDialogModule } from './shared/lib/import-dialog/import-dialog.mod
         MatButtonModule,
         MatIconModule,
         MatDialogModule,
-        ImportDialogModule
+        ImportDialogModule,
+        provideFirebaseApp(() => initializeApp({
+            projectId: 'movie-recommendation-sys',
+            appId: '1:54517771672:web:57e2f58fd4656483574fed',
+            databaseURL: 'https://movie-recommendation-sys.firebaseio.com',
+            storageBucket: 'movie-recommendation-sys.appspot.com',
+            locationId: 'us-central',
+            apiKey: 'AIzaSyDKWONSTgeEHLpqFMTUuMSvBPlM88PWtIM',
+            authDomain: 'movie-recommendation-sys.firebaseapp.com',
+            messagingSenderId: '54517771672'
+        } as FirebaseOptions)),
+        provideDatabase(() => getDatabase())
     ],
     providers: [],
     bootstrap: [AppComponent]
