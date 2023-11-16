@@ -51,8 +51,8 @@ export class VolunteerAssignmentFormComponent implements OnInit, OnDestroy {
         )
         this.form.controls.institution.valueChanges
             .pipe(takeUntil(this.destroy))
-            .subscribe((insitution) => {
-                if (insitution == null || typeof insitution === 'string') {
+            .subscribe((institution) => {
+                if (institution == null || typeof institution === 'string') {
                     this.form.controls.shift.reset()
                     this.form.controls.shift.disable()
                 } else {
@@ -85,6 +85,10 @@ export class VolunteerAssignmentFormComponent implements OnInit, OnDestroy {
         this.state.persistAssignments(this.state.assignments.value)
         this.form.reset()
         this.snackbar.open('המשמרת נוספה בהצלחה.', 'אישור', { duration: 4 * 1000 })
+    }
+
+    isShiftOccupied(shift: Shift): boolean {
+        return this.state.assignments.value.some(assignment => assignment.shiftId === shift.shiftId)
     }
 
     private objectValidator(ctrl: AbstractControl) {

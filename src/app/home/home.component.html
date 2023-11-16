@@ -5,12 +5,8 @@
 
 
 <section>
-    <h2>מוסדות</h2>
-    <div class="row">
-        <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let institution of (institutions$ | async)">
-            <mat-card [routerLink]="['/location', institution.institutionId]" style="margin-bottom: 16px; min-height: 80px;" role="button">
-                <mat-card-content>{{institution.name}}</mat-card-content>
-            </mat-card>
-        </div>
-    </div>
+    <h2>משמרות</h2>
+    <ag-grid-angular class="ag-theme-alpine" style="width: 100%; height: 400px;" [gridOptions]="gridOptions"
+        [columnDefs]="columnDefs" [rowData]="assignmentsExtended$ | async"></ag-grid-angular>
+
 </section>

@@ -25,7 +25,7 @@
         <mat-form-field>
             <mat-label>משמרת</mat-label>
             <mat-select formControlName="shift">
-                <mat-option *ngFor="let shift of shiftOptions | async" [value]="shift">
+                <mat-option *ngFor="let shift of shiftOptions | async" [value]="shift" [disabled]="isShiftOccupied(shift)">
                     {{shift.date}} | {{shift.timeframe}}
                 </mat-option>
             </mat-select>

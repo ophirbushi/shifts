@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Observable, filter, map, withLatestFrom } from 'rxjs'
 import { DatabaseService } from './database.service'
 
 export interface Volunteer {
@@ -26,6 +26,8 @@ export interface Assignment {
     volunteerId: string
 }
 
+export type AssignmentExtended = Shift & Institution & Volunteer & { institutionName: string, volunteerName: string }
+
 @Injectable({
     providedIn: 'root'
 })
@@ -34,6 +36,7 @@ export class StateService {
     institutions!: BehaviorSubject<Institution[]>
     shifts!: BehaviorSubject<Shift[]>
     assignments!: BehaviorSubject<Assignment[]>
+    assignmentsExtended$!: Observable<AssignmentExtended[]>
 
     constructor(private database: DatabaseService) { }
 
@@ -48,6 +51,32 @@ export class StateService {
         this.institutions = new BehaviorSubject(institutions || [])
         this.shifts = new BehaviorSubject(shifts || [])
         this.assignments = new BehaviorSubject(assignments || [])
+
+        this.assignmentsExtended$ = this.assignments.pipe(
+            withLatestFrom(this.volunteers, this.institutions, this.shifts),
+            map(([assignments, volunteers, institutions, shifts]) => {
+                return assignments.map<AssignmentExtended | null>((assignment) => {
+                    const volunteer = volunteers.find(volunteer => volunteer.volunteerId === assignment.volunteerId) as Volunteer
+                    const shift = shifts.find(shift => shift.shiftId === assignment.shiftId) as Shift
+                    const institution = institutions.find(institution => institution.institutionId === shift?.institutionId) as Institution
+                    if (!volunteer || !shift || !institution) {
+                        console.error(
+                            '[StateService] assignmentsExtended$ error: found an entry without matches',
+                            { assignment, volunteer, shift, institution }
+                        )
+                        return null
+                    }
+                    return {
+                        ...shift,
+                        ...volunteer,
+                        ...institution,
+                        volunteerName: volunteer.name,
+                        institutionName: institution.name
+                    }
+                })
+            }),
+            map(entries => entries.filter(entry => entry != null) as Array<AssignmentExtended>)
+        )
     }
 
     getInstitutionById(institutionId: string) {
