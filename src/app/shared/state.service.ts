@@ -26,7 +26,7 @@ export interface Assignment {
     volunteerId: string
 }
 
-export type AssignmentExtended = Shift & Institution & Volunteer & { institutionName: string, volunteerName: string }
+export type AssignmentExtended = Shift & Institution & Volunteer & { institutionName: string, volunteerName: string, assignmentId: string}
 
 @Injectable({
     providedIn: 'root'
@@ -71,7 +71,8 @@ export class StateService {
                         ...volunteer,
                         ...institution,
                         volunteerName: volunteer.name,
-                        institutionName: institution.name
+                        institutionName: institution.name,
+                        assignmentId: assignment.assignmentId
                     }
                 })
             }),
