@@ -58,7 +58,7 @@ export class HomeComponent {
         { field: 'phone', headerName: 'טלפון' },
         { field: 'date', headerName: 'תאריך' },
         { field: 'timeframe', headerName: 'טווח שעות' },
-        { cellRenderer: DeleteButtonCellRenderer }
+        { cellRenderer: DeleteButtonCellRenderer, filter: false, sortable: false }
     ]
 
     constructor(private state: StateService) { }
