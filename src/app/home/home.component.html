@@ -1,12 +1,7 @@
-<section>
-    <h2>שיבוץ משמרת</h2>
-    <app-volunteer-assignment-form></app-volunteer-assignment-form>
-</section>
-
 
 <section>
     <h2>משמרות</h2>
     <ag-grid-angular class="ag-theme-alpine" style="width: 100%; height: 400px;" [gridOptions]="gridOptions"
-        [columnDefs]="columnDefs" [rowData]="assignmentsExtended$ | async"></ag-grid-angular>
+        [columnDefs]="columnDefs" [rowData]="rowData"></ag-grid-angular>
 
 </section>
